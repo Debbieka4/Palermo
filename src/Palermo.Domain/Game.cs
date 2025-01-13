@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Palermo.Domain.Core.Logic
 {
@@ -32,22 +34,37 @@ namespace Palermo.Domain.Core.Logic
         /// <param name="playerNames"></param>
         public void InitializeGame(int numberOfPlayers, List<string> playerNames) 
         {
-           List<Player> rolesList = new List<Player>();
-           
-            foreach (var name in playerNames) 
+
+            for (int i; i < numberOfPlayers; i++) 
             {
-             rolesList.Add(new Citizen(name));
-             rolesList.Add(new Mafia(name));
-             rolesList.Add(new Detective(name));    
+                var randomPlayer = Utils.GetRandomPlayer(playerNames);
+
+                
+            }
+          
+            //Generates radomly two players to be the Mafia by name and adds them
+            //to the player list with their roles assigned.
+            for (int i = 0; i < 2; i++) 
+            {
+                var randomPlayer = Utils.GetRandomPlayer(playerNames);
+              
+                Players.Add(new Mafia(randomPlayer));
+
+                playerNames.Remove(randomPlayer);
             }
 
 
-            for (int i = 0; i < numberOfPlayers; i++)
+            //Selects remaining players to be assigned the role of citizens.
+            for (int i; i < playerNames.Count; i++) 
             {
-                var randomRole = Utils.GetRandomPlayer(rolesList);
-                randomRole.Name = playerNames[i];
-                rolesList.Remove(randomRole);
+                var randomPlayer = Utils.GetRandomPlayer(playerNames);
+
+                Players.Add(new Citizen(randomPlayer));
+
+                playerNames.Remove(randomPlayer);
             }
+
+
         }
 
 

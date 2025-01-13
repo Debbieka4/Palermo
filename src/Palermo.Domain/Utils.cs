@@ -19,7 +19,7 @@ namespace Palermo.Domain.Core.Logic
         /// </summary>
         /// <param name="players"></param>
         /// <returns></returns>
-        public Player GetRandomPlayer(List<Player> players) 
+        public string GetRandomPlayer(List<string> players) 
         {
 
             var randomPlayer = players[random.Next(players.Count)];
