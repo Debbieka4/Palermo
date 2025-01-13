@@ -32,8 +32,13 @@ namespace Palermo.Domain.Core.Logic
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         public void ShuffleList<T>(List<T> list) 
-        { 
-        
+        {
+            for (int i = 0; i < list.Count; i++) 
+            {
+             var randomListItem = list[random.Next(list.Count)];
+             
+             list[i] = randomListItem;
+            }
         }
     }
 }
