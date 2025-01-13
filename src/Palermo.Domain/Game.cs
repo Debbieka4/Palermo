@@ -34,35 +34,19 @@ namespace Palermo.Domain.Core.Logic
         /// <param name="playerNames"></param>
         public void InitializeGame(int numberOfPlayers, List<string> playerNames) 
         {
+            List<Roles> rolesList = new List <Roles>();
+
+            Utils.ShuffleList(rolesList);
+
+            
 
             for (int i; i < numberOfPlayers; i++) 
             {
-                var randomPlayer = Utils.GetRandomPlayer(playerNames);
+           
 
                 
             }
           
-            //Generates radomly two players to be the Mafia by name and adds them
-            //to the player list with their roles assigned.
-            for (int i = 0; i < 2; i++) 
-            {
-                var randomPlayer = Utils.GetRandomPlayer(playerNames);
-              
-                Players.Add(new Mafia(randomPlayer));
-
-                playerNames.Remove(randomPlayer);
-            }
-
-
-            //Selects remaining players to be assigned the role of citizens.
-            for (int i; i < playerNames.Count; i++) 
-            {
-                var randomPlayer = Utils.GetRandomPlayer(playerNames);
-
-                Players.Add(new Citizen(randomPlayer));
-
-                playerNames.Remove(randomPlayer);
-            }
 
 
         }
