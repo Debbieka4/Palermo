@@ -21,7 +21,7 @@ namespace Palermo.Domain.Core.Logic
         /// <returns></returns>
         public string GetRandomPlayer(List<string> players) 
         {
-
+            Random random = new Random();
             var randomPlayer = players[random.Next(players.Count)];
             return randomPlayer;
         }
@@ -33,11 +33,20 @@ namespace Palermo.Domain.Core.Logic
         /// <param name="list"></param>
         public void ShuffleList<T>(List<T> list) 
         {
-            for (int i = 0; i < list.Count; i++) 
+            Random random = new Random();
+
+            //Sets i to the list's max index and it runs till it reaches Zero.
+            for (int i = list.Count - 1; i > 0; i--) 
             {
-             var randomListItem = list[random.Next(list.Count)];
-             
-             list[i] = randomListItem;
+             int randomIndex = random.Next(0, i + 1);
+
+             //The list value on the index i is stored in temporaryValue to ensure
+             //it is safe. Then In the index of i the value of randomIndex is saved.
+             //Lastly in the randomIndex the value of index i is store, attaining the shuffle
+             //of list items as the values of i and randomIndex have been swapped.
+             T temporaryValue = list[i];
+             list[i] = list[randomIndex];
+             list[randomIndex] = temporaryValue;
             }
         }
     }
