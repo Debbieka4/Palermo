@@ -11,7 +11,7 @@ namespace Palermo.Domain.Core.Logic.Players
         public Citizen(string name)
             :base(name) 
         {
-            
+            this.Role = Enum.RoleType.Citizen;
         }
 
         public override void PerformNightAction(Game game)

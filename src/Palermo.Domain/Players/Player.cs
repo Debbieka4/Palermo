@@ -12,7 +12,7 @@ namespace Palermo.Domain.Core.Logic.Players
     {
         public int Id { get; private set; }
         public string Name { get;  set; }
-        public Roles Role { get;  set; }
+        public RoleType Role { get;  set; }
         public bool IsAlive { get; private set; }
 
 

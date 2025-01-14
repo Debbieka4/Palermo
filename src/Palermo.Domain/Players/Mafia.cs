@@ -12,7 +12,7 @@ namespace Palermo.Domain.Core.Logic.Players
         public Mafia(string name)
             :base(name) 
         {
-            
+            this.Role = RoleType.Mafia;
         }
 
         public override void PerformNightAction(Game game)

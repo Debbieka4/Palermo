@@ -11,7 +11,7 @@ namespace Palermo.Domain.Core.Logic.Players
         public Detective(string name)
             :base(name) 
         {
-             
+             this.Role = Enum.RoleType.Detective;
         }
 
         public override void PerformNightAction(Game game)
