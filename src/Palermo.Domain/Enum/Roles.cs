@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace Palermo.Domain.Core.Logic.Enum
 {
-    internal class Roles
+    public enum RoleType
     {
-        enum RoleType
-        {
-            Mafia = 0,
-            Detective = 1,
-            Citizen = 2,
+        Mafia = 0,
+        Detective = 1,
+        Citizen = 2,
 
-        }
     }
 }

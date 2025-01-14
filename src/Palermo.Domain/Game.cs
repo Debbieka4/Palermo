@@ -1,4 +1,5 @@
 ﻿using Palermo.Domain.Core.Logic.Enum;
+using Palermo.Domain.Core.Logic.Interfaces;
 using Palermo.Domain.Core.Logic.Players;
 using System;
 using System.Collections.Generic;
@@ -34,18 +35,29 @@ namespace Palermo.Domain.Core.Logic
         /// <param name="playerNames"></param>
         public void InitializeGame(int numberOfPlayers, List<string> playerNames) 
         {
-            List<Roles> rolesList = new List <Roles>();
-
-            Utils.ShuffleList(rolesList);
-
-            
-
-            for (int i; i < numberOfPlayers; i++) 
-            {
            
+            List<RoleType> rolesList = new List <RoleType>();
 
-                
+            Utils.ShuffleList(playerNames);
+
+            for (int i = 0; i < playerNames.Count; i++) 
+            {
+                for (int j = i; j < 2; j++) 
+                {
+                    Mafia mafia = new Mafia(playerNames[j]);
+                    i++;
+                }
+                for (int v = i; v < 1; v++) 
+                {
+                    Detective detective = new Detective(playerNames[v]);
+                    i++;
+                }
+
+                Citizen citizen = new Citizen(playerNames[i]);
             }
+
+           
+            
           
 
 
