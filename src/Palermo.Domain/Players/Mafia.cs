@@ -17,7 +17,7 @@ namespace Palermo.Domain.Core.Logic.Players
 
         public override void PerformNightAction(Game game)
         {
-            
+            game.ExecuteNightPhase();
         }
 
     }
