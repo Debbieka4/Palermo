@@ -9,8 +9,8 @@ namespace Palermo.Domain.Core.Logic.Players
 {
     internal class Mafia : Player
     {
-        public Mafia(string name)
-            :base(name) 
+        public Mafia(string name, int id)
+            :base(name, id) 
         {
             this.Role = RoleType.Mafia;
         }

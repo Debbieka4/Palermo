@@ -8,8 +8,8 @@ namespace Palermo.Domain.Core.Logic.Players
 {
     internal class Detective : Player
     {
-        public Detective(string name)
-            :base(name) 
+        public Detective(string name, int id)
+            :base(name, id) 
         {
              this.Role = Enum.RoleType.Detective;
         }

@@ -16,9 +16,10 @@ namespace Palermo.Domain.Core.Logic.Players
         public bool IsAlive { get; private set; }
 
 
-        public Player(string name)
+        public Player(string name, int id)
         {
             Name = name;
+            Id = id;
         }
 
         public abstract void PerformNightAction(Game game);

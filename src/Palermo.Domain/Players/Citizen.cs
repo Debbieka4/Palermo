@@ -8,8 +8,8 @@ namespace Palermo.Domain.Core.Logic.Players
 {
     internal class Citizen : Player
     {
-        public Citizen(string name)
-            :base(name) 
+        public Citizen(string name, int id)
+            :base(name, id) 
         {
             this.Role = Enum.RoleType.Citizen;
         }

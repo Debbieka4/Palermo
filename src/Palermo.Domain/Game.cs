@@ -21,6 +21,7 @@ namespace Palermo.Domain.Core.Logic
         public Utils Utils = new Utils();
 
 
+
         public Game()
         {
             this.Players = new List<Player>();
@@ -35,31 +36,54 @@ namespace Palermo.Domain.Core.Logic
         /// <param name="playerNames"></param>
         public void InitializeGame(int numberOfPlayers, List<string> playerNames) 
         {
-           
-            List<RoleType> rolesList = new List <RoleType>();
+
+            if (numberOfPlayers > 3)
+            {
+                var playerIds = GeneratePlayerId(numberOfPlayers);
 
             Utils.ShuffleList(playerNames);
 
-            for (int i = 0; i < playerNames.Count; i++) 
-            {
-                for (int j = i; j < 2; j++) 
-                {
-                    Mafia mafia = new Mafia(playerNames[j]);
-                    i++;
-                }
-                for (int v = i; v < 1; v++) 
-                {
-                    Detective detective = new Detective(playerNames[v]);
-                    i++;
-                }
+            
 
-                Citizen citizen = new Citizen(playerNames[i]);
+                for (int i = 0; i == numberOfPlayers; i++)
+                {
+                    for (int j = i; j < 2; j++)
+                    {
+                        Mafia mafia = new Mafia(playerNames[j], playerIds[j]);
+                        i++;
+                    }
+                    for (int v = i; v < i + 1; v++)
+                    {
+                        Detective detective = new Detective(playerNames[v], playerIds[v]);
+                        i++;
+                    }
+
+                    Citizen citizen = new Citizen(playerNames[i], playerIds[i]);
+                }
             }
 
+            else 
+            {
+                throw new Exception("Number of players must be over 3.");
+            }
            
             
           
 
+
+        }
+
+
+        /// <summary>
+        /// Generates a unique ID for each player.
+        /// </summary>
+        /// <param name="players"></param>
+        public List<int> GeneratePlayerId(int numberOfPlayers) 
+        {
+
+            var generateIds = Enumerable.Range(0, numberOfPlayers);
+            var finalIds = generateIds.Select(id => id).ToList();
+            return finalIds;
 
         }
 
