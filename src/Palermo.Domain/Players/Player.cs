@@ -14,6 +14,7 @@ namespace Palermo.Domain.Core.Logic.Players
         public string Name { get;  set; }
         public RoleType Role { get;  set; }
         public bool IsAlive { get; private set; }
+        public bool HasVoted { get; set; }
 
 
         public Player(string name, int id)
