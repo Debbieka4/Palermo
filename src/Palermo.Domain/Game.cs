@@ -16,7 +16,7 @@ namespace Palermo.Domain.Core.Logic
     {
         public List<Player> Players { get; set; }
         public GamePhazes CurrentPhaze { get; set; }
-        public int RoundCount { get;  private set; }
+        public int RoundCount { get; private set; }
 
         public Utils Utils = new Utils();
 
@@ -28,16 +28,16 @@ namespace Palermo.Domain.Core.Logic
             this.RoundCount = 1;
 
         }
-        
+
         /// <summary>
         /// Sets up the game by assigning roles randomly.
         /// </summary>
         /// <param name="numberOfPlayers"></param>
         /// <param name="playerNames"></param>
-        public void InitializeGame(int numberOfPlayers, List<string> playerNames) 
+        public void InitializeGame(int numberOfPlayers, List<string> playerNames)
         {
 
-            if (numberOfPlayers > 3)
+            if (numberOfPlayers > 3 && playerNames.Any() && playerNames.Count > 3)
             {
                 var playerIds = GeneratePlayerId(numberOfPlayers);
 

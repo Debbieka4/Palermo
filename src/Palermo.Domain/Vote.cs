@@ -58,6 +58,7 @@ namespace Palermo.Domain.Core.Logic
         /// <returns></returns>
         public int GetEliminatedPlayerId() 
         {
+           
             return 0;
         } 
     }
