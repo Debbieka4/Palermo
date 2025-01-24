@@ -16,6 +16,8 @@ namespace Palermo.Domain.Core.Logic
         /// </summary>
         public Dictionary<int, int> Votes { get; set; }
 
+        public Dictionary<Player, int> Player { get; set; }
+
         public int PlayerTotalVotes = 0;
 
         /// <summary>
@@ -25,24 +27,35 @@ namespace Palermo.Domain.Core.Logic
         /// <param name="targetId"></param>
         public void CastVote(int voterId, int targetId, List<Player> players)
         {
+            var targetPlayer = players.SkipWhile(p => p.Id != targetId).TakeWhile(p => p.Id == targetId);
+
+            
 
             foreach (Player player in players)
             {
-                if (!player.HasVoted)
+                if (player.Id == voterId)
                 {
-                    if (player.Id == voterId)
-                    {
+
+                    if (!player.HasVoted)
+                    {            
                         player.HasVoted = true;
+                        Votes.Add(voterId, targetId);
+                        Player.Add((Player)targetPlayer, PlayerTotalVotes + 1);
+                        PlayerTotalVotes++;
+                    }
+                    else
+                    {
+                        throw new Exception("This player has already voted, cannot vote twice.");
                     }
                 }
-                else 
+                else
                 {
-                    throw new Exception("This player has already voted, cannot vote twice.");
+                    throw new Exception("Voter Id doesn't exist.");
                 }
+                
             }
 
-            Votes.Add(targetId, PlayerTotalVotes + 1);
-            PlayerTotalVotes++;
+            
 
 
            
@@ -56,10 +69,10 @@ namespace Palermo.Domain.Core.Logic
         /// Determines the player with the most votes.
         /// </summary>
         /// <returns></returns>
-        public int GetEliminatedPlayerId() 
+        public Player GetEliminatedPlayerId() 
         {
-           
-            return 0;
+            var playerWithMaxVote = Player.Max();
+            return playerWithMaxVote.Key; 
         } 
     }
 }
