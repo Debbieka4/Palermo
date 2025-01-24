@@ -35,18 +35,15 @@ namespace Palermo.Domain.Core.Logic
         {
             Random random = new Random();
 
-            //Sets i to the list's max index and it runs till it reaches Zero.
-            for (int i = list.Count - 1; i > 0; i--) 
-            {
-             int randomIndex = random.Next(0, i + 1);
+            List<T> shuffledList = new List<T>();
 
-             //The list value on the index i is stored in temporaryValue to ensure
-             //it is safe. Then In the index of i the value of randomIndex is saved.
-             //Lastly in the randomIndex the value of index i is store, attaining the shuffle
-             //of list items as the values of i and randomIndex have been swapped.
-             T temporaryValue = list[i];
-             list[i] = list[randomIndex];
-             list[randomIndex] = temporaryValue;
+            for (int i = 0; i < list.Count - 1; i++) 
+            {
+                var randomItem = list[random.Next(list.Count)];
+
+                shuffledList.Add(randomItem);
+
+                list.Remove(randomItem);
             }
         }
     }
