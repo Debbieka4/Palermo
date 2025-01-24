@@ -31,7 +31,7 @@ namespace Palermo.Domain.Core.Logic
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
-        public void ShuffleList<T>(List<T> list) 
+        public List<T> ShuffleList<T>(List<T> list) 
         {
             Random random = new Random();
 
@@ -45,6 +45,8 @@ namespace Palermo.Domain.Core.Logic
 
                 list.Remove(randomItem);
             }
+
+            return shuffledList;
         }
     }
 }
