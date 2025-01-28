@@ -100,10 +100,19 @@ namespace Palermo.Domain.Core.Logic
 
         /// <summary>
         /// Handles all actions for the Night phase.
+        /// Removes the target player - Mafia's selection - from the Players list.
         /// </summary>
-        public void ExecuteNightPhase() 
+        /// <param name="targetPlayerId"></param>
+        public void ExecuteNightPhase(int targetPlayerId) 
         {
-        
+         var eliminatedPlayer = string.Empty;
+         foreach (var player in Players) 
+            {
+                if (player.Id.Equals(targetPlayerId)) 
+                {
+                 Players.Remove(player);
+                }
+            }
         }
 
 
