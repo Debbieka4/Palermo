@@ -121,21 +121,62 @@ namespace Palermo.Domain.Core.Logic
         /// It takes as a parameter a Dictionary which includes the id of the voter
         /// and the player that they are voting.
         /// </summary>
-        public void ExecuteDayPhase(Dictionary<int, int> votes) 
+        public string ExecuteDayPhase(Dictionary<int, int> votes) 
         {
             Vote vote = new Vote(votes);
-            vote.VotingProcess(Players);
+            var eliminatedPlayerName = vote.VotingProcess(Players);
+            return eliminatedPlayerName;
             
         }
 
 
         /// <summary>
-        /// Determines if the game has ended and which side has won.
+        /// Determines if the game has ended.
         /// </summary>
         /// <returns></returns>
         public bool CheckVictoryConditions() 
         {
-            return false;
+
+            if (!Players.Select(p => p.Role).Equals(RoleType.Detective))
+            {
+                /// the game has ended because the Detective has died. 
+                return true;
+            }
+
+            if (!Players.Select(p => p.Role).Equals(RoleType.Mafia))
+            {
+                /// the game has ended because the Mafia have died. 
+                return  true;
+            }
+            else 
+            {
+                /// both the Mafia and the Detective are alive.
+                return false;
+            }
+
+        }
+
+
+        /// <summary>
+        /// Determines which side has won.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasGoodWon() 
+        {
+
+            bool goodHasWon = false;
+
+            if (CheckVictoryConditions() && Players.Select(p => p.Role).Equals(RoleType.Detective))
+            {
+                goodHasWon = true;
+            }
+
+            else
+            {
+                goodHasWon = false;
+            }
+
+            return goodHasWon;
         }
 
         /// <summary>
@@ -143,7 +184,7 @@ namespace Palermo.Domain.Core.Logic
         /// </summary>
         public void DisplayResults() 
         {
-        
+         
         }
     }
 }
