@@ -93,7 +93,8 @@ namespace Palermo.Domain.Core.Logic
         /// </summary>
         public void Start() 
         {
-        
+          
+          
         }
 
 
@@ -108,10 +109,14 @@ namespace Palermo.Domain.Core.Logic
 
         /// <summary>
         /// Handles voting and discussions for the Day phase.
+        /// It takes as a parameter a Dictionary which includes the id of the voter
+        /// and the player that they are voting.
         /// </summary>
-        public void ExecuteDayPhase() 
+        public void ExecuteDayPhase(Dictionary<int, int> votes) 
         {
-        
+            Vote vote = new Vote(votes);
+            vote.VotingProcess(Players);
+            
         }
 
 

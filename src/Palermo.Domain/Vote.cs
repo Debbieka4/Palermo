@@ -4,74 +4,95 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Palermo.Domain.Core.Logic
 {
     internal class Vote
-    {
-        /// <summary>
-        /// Maps player IDs to the number of votes received.
-        /// </summary>
+    {        
+        
+
+       /// <summary>
+       /// Maps the voter's id to the id of the player they are voting.
+       /// Key: voter id, Value: target player id.
+       /// </summary>
         public Dictionary<int, int> Votes { get; set; }
 
-        public Dictionary<Player, int> Player { get; set; }
+        /// <summary>
+        /// Matches the target player's id with the number of total votes
+        /// they have received from other players.
+        /// </summary>
+        public Dictionary<int, int> Player { get; set; }
 
-        public int PlayerTotalVotes = 0;
+     
+
+        public Vote(Dictionary<int, int> votes)
+        {
+            this.Votes = votes;
+        }
+
 
         /// <summary>
-        /// Records a vote from one player to another.
+        /// Handles the voting process and finally returns the eliminated player's name.
         /// </summary>
-        /// <param name="voterId"></param>
-        /// <param name="targetId"></param>
-        public void CastVote(int voterId, int targetId, List<Player> players)
+        /// <param name="players"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+      
+        public string VotingProcess(List<Player> players)
         {
-            var targetPlayer = players.SkipWhile(p => p.Id != targetId).TakeWhile(p => p.Id == targetId);
+            string eliminatedPlayer = string.Empty;     
 
-            
-
-            foreach (Player player in players)
+            if (Votes.Count == players.Count)
             {
-                if (player.Id == voterId)
-                {
+                DetermineNumberOfVotes();
+                var eliminatedPlayerId = GetEliminatedPlayerId();
 
-                    if (!player.HasVoted)
-                    {            
-                        player.HasVoted = true;
-                        Votes.Add(voterId, targetId);
-                        Player.Add((Player)targetPlayer, PlayerTotalVotes + 1);
-                        PlayerTotalVotes++;
-                    }
-                    else
-                    {
-                        throw new Exception("This player has already voted, cannot vote twice.");
-                    }
-                }
-                else
+
+                foreach (var player in players)
                 {
-                    throw new Exception("Voter Id doesn't exist.");
-                }
-                
+                    if (player.Id == eliminatedPlayerId) 
+                    {
+                     eliminatedPlayer = player.Name;
+                    }
+            }
+            }
+            else
+            {
+                throw new Exception("Not all players have voted.");
             }
 
-            
 
-
-           
-            
-              
-            
+            return eliminatedPlayer;
 
         }
 
+
         /// <summary>
-        /// Determines the player with the most votes.
+        /// Determines how many votes in total a player has received from other players.
+        /// </summary>
+        public void DetermineNumberOfVotes() 
+        {
+            var byTargetId = Votes.GroupBy(v => v.Value);                   
+
+            foreach (var groupItem in byTargetId)
+            {
+                var totalVotes = groupItem.Count();
+                Player.Add(groupItem.Key, totalVotes);
+                
+            }
+         
+        }
+
+        /// <summary>
+        /// Determines the player with the most votes and returns their id.
         /// </summary>
         /// <returns></returns>
-        public Player GetEliminatedPlayerId() 
+        public int GetEliminatedPlayerId() 
         {
-            var playerWithMaxVote = Player.Max();
+            var playerWithMaxVote = Player.Max();          
             return playerWithMaxVote.Key; 
         } 
     }
