@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Palermo.Domain.Core.Logic.Enum
 {
-        enum GamePhaze
+        public enum GamePhaze
         {
             Night = 0,
             Day = 1,

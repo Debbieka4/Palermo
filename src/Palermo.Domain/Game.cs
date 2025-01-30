@@ -15,7 +15,7 @@ namespace Palermo.Domain.Core.Logic
     public class Game
     {
         public List<Player> Players { get; set; }
-        public GamePhazes CurrentPhaze { get; set; }
+        public GamePhaze CurrentPhaze { get; set; }
         public int RoundCount { get; private set; }
 
         public Utils Utils = new Utils();
