@@ -182,14 +182,14 @@ namespace Palermo.Domain.Core.Logic
         /// <summary>
         /// Shows the final roles and outcome of the game.
         /// </summary>
-        public Dictionary<Player, string> DisplayResults() 
+        public Dictionary<string, string> DisplayResults() 
         {
-            Dictionary<Player, string> playerWithRoles = new Dictionary<Player, string>();
+            Dictionary<string, string> playerWithRoles = new Dictionary<string, string>();
 
             foreach (var player in Players) 
             {
 
-             playerWithRoles.Add(player, player.Role.ToString());
+             playerWithRoles.Add(player.Name, player.Role.ToString());
 
             }
 
