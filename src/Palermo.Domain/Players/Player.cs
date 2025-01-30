@@ -8,7 +8,7 @@ using Palermo.Domain.Core.Logic.Interfaces;
 
 namespace Palermo.Domain.Core.Logic.Players
 {
-    abstract class Player : IRole
+    abstract public class Player : IRole
     {
         public int Id { get; private set; }
         public string Name { get;  set; }

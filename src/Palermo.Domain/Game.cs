@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace Palermo.Domain.Core.Logic
 {
-    internal class Game
+    public class Game
     {
         public List<Player> Players { get; set; }
         public GamePhazes CurrentPhaze { get; set; }
@@ -105,6 +105,8 @@ namespace Palermo.Domain.Core.Logic
         /// <param name="targetPlayerId"></param>
         public void ExecuteNightPhase(int targetPlayerId) 
         {
+            CurrentPhaze = GamePhaze.Night;
+
          var eliminatedPlayer = string.Empty;
          foreach (var player in Players) 
             {
@@ -123,6 +125,8 @@ namespace Palermo.Domain.Core.Logic
         /// </summary>
         public string ExecuteDayPhase(Dictionary<int, int> votes) 
         {
+            CurrentPhaze = GamePhaze.Day;
+
             Vote vote = new Vote(votes);
             var eliminatedPlayerName = vote.VotingProcess(Players);
             return eliminatedPlayerName;

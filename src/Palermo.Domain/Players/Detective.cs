@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Palermo.Domain.Core.Logic.Players
 {
-    internal class Detective : Player
+    public class Detective : Player
     {
         public Detective(string name, int id)
             :base(name, id) 

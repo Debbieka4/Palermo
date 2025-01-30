@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Palermo.Domain.Core.Logic.Players
 {
-    internal class Mafia : Player
+    public class Mafia : Player
     {
         public Mafia(string name, int id)
             :base(name, id) 

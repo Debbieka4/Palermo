@@ -10,7 +10,7 @@ namespace Palermo.Domain.Core.Logic
     /// <summary>
     /// Helper Class.
     /// </summary>
-    internal class Utils
+    public class Utils
     {
 
         public Random random = new Random();

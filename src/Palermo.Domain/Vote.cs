@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Palermo.Domain.Core.Logic
 {
-    internal class Vote
+    public class Vote
     {        
         
 
