@@ -49,16 +49,16 @@ namespace Palermo.Domain.Core.Logic
                 {
                     for (int j = i; j < 2; j++)
                     {
-                        Mafia mafia = new Mafia(playerNames[j], playerIds[j]);
+                        Mafia mafia = new Mafia(playerNames[j], playerIds[j], RoleType.Mafia);
                         i++;
                     }
                     for (int v = i; v < i + 1; v++)
                     {
-                        Detective detective = new Detective(playerNames[v], playerIds[v]);
+                        Detective detective = new Detective(playerNames[v], playerIds[v], RoleType.Detective);
                         i++;
                     }
 
-                    Citizen citizen = new Citizen(playerNames[i], playerIds[i]);
+                    Citizen citizen = new Citizen(playerNames[i], playerIds[i], RoleType.Citizen);
                 }
             }
 

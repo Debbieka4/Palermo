@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Palermo.Domain.Core.Logic.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace Palermo.Domain.Core.Logic.Players
 {
     public class Citizen : Player
     {
-        public Citizen(string name, int id)
-            :base(name, id) 
+        public Citizen(string name, int id, RoleType role)
+            :base(name, id, role) 
         {
-            this.Role = Enum.RoleType.Citizen;
+        
         }
 
         public override void PerformNightAction(Game game)

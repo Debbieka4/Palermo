@@ -9,10 +9,10 @@ namespace Palermo.Domain.Core.Logic.Players
 {
     public class Mafia : Player
     {
-        public Mafia(string name, int id)
-            :base(name, id) 
+        public Mafia(string name, int id, RoleType role)
+            :base(name, id, role) 
         {
-            this.Role = RoleType.Mafia;
+           
         }
 
         public override void PerformNightAction(Game game)

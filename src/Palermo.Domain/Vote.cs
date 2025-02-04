@@ -18,82 +18,56 @@ namespace Palermo.Domain.Core.Logic
        /// Maps the voter's id to the id of the player they are voting.
        /// Key: voter id, Value: target player id.
        /// </summary>
-        public Dictionary<int, int> Votes { get; set; }
+        public Dictionary<Player, Player> HaveVoted { get; set; }
 
-        /// <summary>
-        /// Matches the target player's id with the number of total votes
-        /// they have received from other players.
-        /// </summary>
-        public Dictionary<int, int> Player { get; set; }
+        
 
-     
 
-        public Vote(Dictionary<int, int> votes)
+
+        public void CastVote(Player voter, Player target, List<Player> players) 
         {
-            this.Votes = votes;
-        }
-
-
-        /// <summary>
-        /// Handles the voting process and finally returns the eliminated player's name.
-        /// </summary>
-        /// <param name="players"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-      
-        public string VotingProcess(List<Player> players)
-        {
-            string eliminatedPlayer = string.Empty;     
-
-            if (Votes.Count == players.Count)
-            {
-                DetermineNumberOfVotes();
-                var eliminatedPlayerId = GetEliminatedPlayerId();
-
-
-                foreach (var player in players)
+          
+                if (!HaveVoted.ContainsKey(voter))
                 {
-                    if (player.Id == eliminatedPlayerId) 
-                    {
-                     eliminatedPlayer = player.Name;
-                    }
-            }
-            }
-            else
-            {
-                throw new Exception("Not all players have voted.");
-            }
-
-
-            return eliminatedPlayer;
-
+                   if (voter.IsVotingThemselves(voter))
+                   {
+                     target.AddVote();
+                     HaveVoted.Add(voter, target);
+                   }
+                   else 
+                   {
+                    throw new Exception("Player cannot vote themselves.");
+                   }
+                }
+                else
+                {
+                    throw new Exception("Player " + voter.Name + " has already voted, cannot vote twice.");
+                }
+           
         }
 
 
-        /// <summary>
-        /// Determines how many votes in total a player has received from other players.
-        /// </summary>
-        public void DetermineNumberOfVotes() 
+
+
+
+        public void ResetVotingProcess(List<Player> players) 
         {
-            var byTargetId = Votes.GroupBy(v => v.Value);                   
-
-            foreach (var groupItem in byTargetId)
+            HaveVoted.Clear();
+            foreach (Player player in players) 
             {
-                var totalVotes = groupItem.Count();
-                Player.Add(groupItem.Key, totalVotes);
-                
+             player.ResetVotes();
             }
-         
         }
 
         /// <summary>
-        /// Determines the player with the most votes and returns their id.
+        /// Determines the player with the most votes and returns them.
         /// </summary>
         /// <returns></returns>
-        public int GetEliminatedPlayerId() 
+        public Player GetEliminatedPlayerId() 
         {
-            var playerWithMaxVote = Player.Max();          
-            return playerWithMaxVote.Key; 
+            var eliminatedPlayer = HaveVoted.Values.OrderBy(x => x.Votes).First();
+            eliminatedPlayer.IsDead();
+            return eliminatedPlayer;
         } 
     }
 }
