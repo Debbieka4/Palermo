@@ -13,7 +13,6 @@ namespace Palermo.Domain.Core.Logic
     public class Utils
     {
 
-        public Random random = new Random();
         /// <summary>
         /// Selects a random player by name from the list.
         /// </summary>
@@ -37,13 +36,15 @@ namespace Palermo.Domain.Core.Logic
 
             List<T> shuffledList = new List<T>();
 
+            List<T> copyList = list;
+
             for (int i = 0; i < list.Count - 1; i++) 
             {
-                var randomItem = list[random.Next(list.Count)];
+                var randomItem = list[random.Next(copyList.Count)];
 
                 shuffledList.Add(randomItem);
 
-                list.Remove(randomItem);
+                copyList.Remove(randomItem);
             }
 
             return shuffledList;
