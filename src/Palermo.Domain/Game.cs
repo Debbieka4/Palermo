@@ -123,13 +123,10 @@ namespace Palermo.Domain.Core.Logic
         /// It takes as a parameter a Dictionary which includes the id of the voter
         /// and the player that they are voting.
         /// </summary>
-        public string ExecuteDayPhase(Dictionary<int, int> votes) 
+        public void ExecuteDayPhase() 
         {
             CurrentPhaze = GamePhaze.Day;
 
-            Vote vote = new Vote(votes);
-            var eliminatedPlayerName = vote.VotingProcess(Players);
-            return eliminatedPlayerName;
             
         }
 
