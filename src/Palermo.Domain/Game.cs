@@ -119,15 +119,21 @@ namespace Palermo.Domain.Core.Logic
 
 
         /// <summary>
-        /// Handles voting and discussions for the Day phase.
-        /// It takes as a parameter a Dictionary which includes the id of the voter
-        /// and the player that they are voting.
+        /// 
         /// </summary>
         public void ExecuteDayPhase() 
         {
             CurrentPhaze = GamePhaze.Day;
-
             
+            
+            
+        }
+
+        public void CastPlayerVotes(Player voter, Player targetPlayer) 
+        {
+            Vote newVote = new Vote();
+
+            newVote.CastVote(voter, targetPlayer, Players);
         }
 
 

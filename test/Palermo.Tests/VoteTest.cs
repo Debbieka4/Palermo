@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Palermo.Tests
 {
     [TestClass]
-    internal class VoteTest
+    public class VoteTest
     {
         [TestMethod]
         public void Is_Vote_Being_Cast() 
