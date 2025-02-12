@@ -12,7 +12,7 @@ namespace Palermo.Tests
     public class VoteTest
     {
         [TestMethod]
-        public void Is_Vote_Being_Cast() 
+        public void Is_Vote_Being_Cast()
         {
 
            // Arrange 
@@ -35,8 +35,8 @@ namespace Palermo.Tests
 
             // Assert
 
-            vote.GetEliminatedPlayerId();
-
+            var eliminatedPlayer = vote.GetEliminatedPlayerId();
+            
 
         }
     }

@@ -18,9 +18,9 @@ namespace Palermo.Domain.Core.Logic
        /// Maps the voter's id to the id of the player they are voting.
        /// Key: voter id, Value: target player id.
        /// </summary>
-        public Dictionary<Player, Player> HaveVoted { get; set; }
+        public Dictionary<Player, Player> HaveVoted { get; set; } = new Dictionary<Player, Player>();
 
-        
+
 
         /// <summary>
         /// Casts another player's vote towards the player of their choosing.
@@ -30,15 +30,15 @@ namespace Palermo.Domain.Core.Logic
         /// <param name="players"></param>
         /// <exception cref="Exception"></exception>
 
-        public void CastVote(Player voter, Player target, List<Player> players) 
+        public void CastVote(Player voter, Player target, List<Player> players)
         {
-                List<Player> alivePlayers = players.Where(p => p.IsAlive == true).ToList();
+            List<Player> alivePlayers = players.Where(p => p.IsAlive == true).ToList();
 
             if (alivePlayers.Contains(voter) && alivePlayers.Contains(target))
             {
-                if (!HaveVoted.ContainsKey(voter))
+                if (!HaveVoted.ContainsKey(voter) || HaveVoted.Any())
                 {
-                    if (!voter.IsVotingThemselves(voter))
+                    if (voter.IsVotingThemselves(voter))
                     {
                         target.AddVote();
                         HaveVoted.Add(voter, target);
