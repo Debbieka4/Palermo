@@ -50,8 +50,15 @@ public class Program
                     {
 
                         var playerName = Console.ReadLine();
-                        playerNames.Add(playerName);
 
+                        if (playerName != null ) /// look up how to check whether an int has been given instead of string.
+                        {
+                            playerNames.Add(playerName);
+                        }
+                        else 
+                        {
+                            Console.WriteLine("You must insert a name.");
+                        }
                     }
 
                 }
@@ -74,24 +81,49 @@ public class Program
 
         void CastVotes() 
         {
+            Vote vote = new Vote();
+
+
             foreach (Player player in game.Players) 
             {
-                Console.WriteLine("Who will be casting the vote?");
+                if (!vote.HaveVoted.ContainsKey(player))
+                {
 
-                var voterName = Console.ReadLine();
+                    Console.WriteLine("Who will be casting the vote?");
 
-                var voter = player.Where(p => p.Name == voterName);
+                    var voterName = Console.ReadLine();
 
+                    var voter = player.Where(p => p.Name == voterName);
 
-                Console.WriteLine("Who will you be voting?");
+                    if (!game.Players.Contains(voter))
+                    {
+                        Console.WriteLine("This player does not exist.");
+                        return;
+                    }
 
-                var targetName = Console.ReadLine();
+                    else
+                    {
+                        Console.WriteLine("Who will you be voting?");
 
-                var target = player.Where(p => p.Name == targetName);
+                        var targetName = Console.ReadLine();
 
-                Vote vote = new Vote();
+                        var target = player.Where(p => p.Name == targetName);
 
-                vote.CastVote(voter, target, game.Players);
+                        if (!game.Players.Contains(target))
+                        {
+                            Console.WriteLine("This player does not exist.");
+                            return;
+                        }
+                        else
+                        {
+                            vote.CastVote(voter, target, game.Players);
+                        }
+                    }
+                }
+                else 
+                {
+                    Console.WriteLine("This player has already voted, cannot vote twice.");
+                }
             }
         }
 
