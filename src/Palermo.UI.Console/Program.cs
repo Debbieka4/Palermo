@@ -71,6 +71,30 @@ public class Program
         }
 
 
+
+        void CastVotes() 
+        {
+            foreach (Player player in game.Players) 
+            {
+                Console.WriteLine("Who will be casting the vote?");
+
+                var voterName = Console.ReadLine();
+
+                var voter = player.Where(p => p.Name == voterName);
+
+
+                Console.WriteLine("Who will you be voting?");
+
+                var targetName = Console.ReadLine();
+
+                var target = player.Where(p => p.Name == targetName);
+
+                Vote vote = new Vote();
+
+                vote.CastVote(voter, target, game.Players);
+            }
+        }
+
     }
 
 
