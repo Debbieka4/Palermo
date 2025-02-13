@@ -41,11 +41,29 @@ namespace Palermo.Domain.Core.Logic.Players
         {
          IsAlive = false;
         }
+       
 
-        public bool IsVotingThemselves(Player target) 
+        public void Vote(Player target) 
         {
-            var equal = target.Id.Equals(Id);
-            return equal;
+         if (target.Id.Equals(Id))
+            {
+                throw new Exception("Player cannot vote for themselves");
+            }
+         else if (target.IsAlive == false) 
+            {
+                throw new Exception("Player cannot vote for a player who has died.");
+            }
+         else if (IsAlive == false) 
+            {
+                throw new Exception("Player voter has died, cannot vote.");
+            }
+         else if (target == null) 
+            {
+                throw new Exception("Target player is null");
+            }
+
+
+         target.AddVote();
         }
 
         public abstract void PerformNightAction(Game game);

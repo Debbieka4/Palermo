@@ -20,15 +20,12 @@ namespace Palermo.Domain.Core.Logic
         private Dictionary<int, Player> _haveVoted { get; set; } = new Dictionary<int, Player>();
         public List<Player> Players { get; set; } 
 
-        private List<Player> _alivePlayers { get; set; } 
-
         public VotingResults VotingResults { get; set; }
 
 
         public VotingService(List<Player> players)
         {
             Players = players;
-            _alivePlayers = players;
             VotingResults = new VotingResults();
         }
 
@@ -41,16 +38,9 @@ namespace Palermo.Domain.Core.Logic
         /// <exception cref="Exception"></exception>
 
         public void CastVote(Player voter, Player target)
-        {
-            if (_alivePlayers.Contains(target) && _alivePlayers.Contains(voter))
-            {
-                target.AddVote();
+        {           
+                voter.Vote(target);
                 _haveVoted.Add(voter.Id, voter);
-            }
-            else
-            {
-                throw new Exception("Voter or target player are not alive.");
-            }
            
         }
 
@@ -99,7 +89,6 @@ namespace Palermo.Domain.Core.Logic
          VotingResults.EliminatedPlayer = eliminatedPlayer;
          eliminatedPlayer.EliminatePlayer();
          
-         _alivePlayers.Remove(eliminatedPlayer);
         }
 
 
