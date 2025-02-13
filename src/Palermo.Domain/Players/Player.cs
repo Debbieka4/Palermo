@@ -37,7 +37,7 @@ namespace Palermo.Domain.Core.Logic.Players
          Votes = 0;
         }
 
-        public void IsDead() 
+        public void EliminatePlayer() 
         {
          IsAlive = false;
         }
