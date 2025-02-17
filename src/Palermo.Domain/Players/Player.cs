@@ -27,22 +27,41 @@ namespace Palermo.Domain.Core.Logic.Players
         }
 
 
+        /// <summary>
+        /// Adds a vote to the total votes of the player.
+        /// </summary>
         public void AddVote() 
         {
         Votes++;
         }
 
+
+        /// <summary>
+        /// Sets player's total votes to zero.
+        /// </summary>
         public void ResetVotes() 
         {
          Votes = 0;
         }
 
+
+
+        /// <summary>
+        /// Marks a player as dead.
+        /// </summary>
         public void EliminatePlayer() 
         {
          IsAlive = false;
         }
        
 
+
+
+        /// <summary>
+        /// Casts their vote towards the target player.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <exception cref="Exception"></exception>
         public void Vote(Player target) 
         {
          if (target.Id.Equals(Id))
