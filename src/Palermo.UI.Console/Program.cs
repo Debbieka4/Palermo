@@ -81,49 +81,34 @@ public class Program
 
         void CastVotes() 
         {
-            Vote vote = new Vote();
+            VotingService vote = new VotingService(game.Players);
 
 
             foreach (Player player in game.Players) 
             {
-                if (!vote.HaveVoted.ContainsKey(player))
-                {
+                
 
                     Console.WriteLine("Who will be casting the vote?");
 
                     var voterName = Console.ReadLine();
 
-                    var voter = player.Where(p => p.Name == voterName);
+                    //var voter = player.Where(p => p.Name == voterName);
 
-                    if (!game.Players.Contains(voter))
-                    {
-                        Console.WriteLine("This player does not exist.");
-                        return;
-                    }
+                 
 
-                    else
-                    {
+                    
                         Console.WriteLine("Who will you be voting?");
 
                         var targetName = Console.ReadLine();
 
-                        var target = player.Where(p => p.Name == targetName);
+                       // var target = player.Where(p => p.Name == targetName);
 
-                        if (!game.Players.Contains(target))
-                        {
-                            Console.WriteLine("This player does not exist.");
-                            return;
-                        }
-                        else
-                        {
-                            vote.CastVote(voter, target, game.Players);
-                        }
-                    }
+                      
+                        
+                        
+                    
                 }
-                else 
-                {
-                    Console.WriteLine("This player has already voted, cannot vote twice.");
-                }
+             
             }
         }
 
@@ -134,7 +119,7 @@ public class Program
    
 
 
-}
+
 
 
 

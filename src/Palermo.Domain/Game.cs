@@ -131,9 +131,9 @@ namespace Palermo.Domain.Core.Logic
 
         public void CastPlayerVotes(Player voter, Player targetPlayer) 
         {
-            Vote newVote = new Vote();
+            VotingService newVote = new VotingService(Players);
 
-            newVote.CastVote(voter, targetPlayer, Players);
+            newVote.CastVote(voter, targetPlayer);
         }
 
 
