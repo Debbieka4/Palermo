@@ -12,7 +12,7 @@ namespace Palermo.Tests
     public class VotingServiceTests
     {
 
-        public List<Player> PlayerList { get; set; }
+        public List<Player> PlayerList { get; set; } = new List<Player>();
 
         [TestMethod]
         public void Is_Eliminating_Right_Player()
