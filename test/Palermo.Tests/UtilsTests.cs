@@ -20,6 +20,8 @@ namespace Palermo.Tests
 
 
             Utils utils = new Utils();
+
+
             Mafia player1 = new Mafia("John", 1, Domain.Core.Logic.Enum.RoleType.Mafia);
             Citizen player2 = new Citizen("Maria", 2, Domain.Core.Logic.Enum.RoleType.Citizen);
             Detective player3 = new Detective("Monk", 3, Domain.Core.Logic.Enum.RoleType.Detective);
@@ -34,8 +36,9 @@ namespace Palermo.Tests
 
             //Assert
 
+            Assert.AreEqual(shuffledList.Count, 3);
             Assert.AreEqual(PlayerList.Count, 3);
-            Assert.AreNotSame(shuffledList, PlayerList);
+            Assert.AreNotEqual(shuffledList, PlayerList);
         }
     }
 }
