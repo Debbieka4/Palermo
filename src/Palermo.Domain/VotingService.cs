@@ -20,13 +20,13 @@ namespace Palermo.Domain.Core.Logic
         private Dictionary<int, Player> _haveVoted { get; set; } = new Dictionary<int, Player>();
         public List<Player> Players { get; set; } 
 
-        public VotingResults VotingResults { get; set; }
+   
 
 
         public VotingService(List<Player> players)
         {
             Players = players;
-            VotingResults = new VotingResults();
+        
         }
 
         /// <summary>
@@ -46,6 +46,9 @@ namespace Palermo.Domain.Core.Logic
 
 
 
+        
+
+
 
         /// <summary>
         /// Resets the number of votes on each player and clears the documents of who voted for whom in the previous round. 
@@ -55,10 +58,6 @@ namespace Palermo.Domain.Core.Logic
         {
 
             _haveVoted.Clear();
-
-            VotingResults.FinalVotes.Clear();
-
-            VotingResults.EliminatedPlayer = null; 
 
             foreach (Player player in players) 
             {
@@ -75,44 +74,35 @@ namespace Palermo.Domain.Core.Logic
         /// <returns></returns>
         public Player GetEliminatedPlayer() 
         {
-            var eliminatedPlayer = _haveVoted.Values.OrderBy(x => x.Votes).First();
+            var eliminatedPlayer = Players.OrderBy(x => x.Votes).Last();
+            eliminatedPlayer.EliminatePlayer();
             return eliminatedPlayer;
         } 
 
 
-        /// <summary>
-        /// Eliminates the player with the most votes.
-        /// </summary>
-        public void EliminatePlayer() 
-        {
-         var eliminatedPlayer = GetEliminatedPlayer();
-         VotingResults.EliminatedPlayer = eliminatedPlayer;
-         eliminatedPlayer.EliminatePlayer();
-         
-        }
-
 
 
         /// <summary>
-        /// Displays the results of the voting process, meaning how many votes each player got.
+        /// Returns the results of the voting process, meaning how many votes each player got and who got eliminated.
         /// </summary>
-        public Dictionary<Player, int> DisplayVotingResults() 
+        public VotingResults GetVotingResults() 
         {
+
+            var votes = new Dictionary<Player, int>();
+
             foreach (Player player in Players) 
             {
-                VotingResults.FinalVotes.Add(player, player.Votes);
+                votes.Add(player, player.Votes);
             }
 
-            return VotingResults.FinalVotes;
+            return new VotingResults(GetEliminatedPlayer(), votes);
         }
 
 
 
-        public void EndVotingProcess() 
-        {
-            DisplayVotingResults();
-            EliminatePlayer();
-        }
+
+
+      
 
     }
 }

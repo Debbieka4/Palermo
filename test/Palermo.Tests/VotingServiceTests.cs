@@ -21,43 +21,31 @@ namespace Palermo.Tests
             // Arrange 
 
 
+
             VotingService votingService = new VotingService(PlayerList);
             CreatePlayers();
 
 
             // Act
 
-            CastVotes(votingService);
+            votingService.CastVote(PlayerList[0], PlayerList[1]);
+            votingService.CastVote(PlayerList[1], PlayerList[2]);
+            votingService.CastVote(PlayerList[2], PlayerList[1]);
+
+            var eliminatedPlayer = votingService.GetVotingResults().EliminatedPlayer;
 
 
 
 
             // Assert
 
-            Assert.AreEqual(PlayerList[1], votingService.GetEliminatedPlayer());
-            
-
-        }
-
-
-        [TestMethod]
-        public void Is_Player_Eliminated()
-        {
-            //Arrange
-
-            VotingService votingService = new VotingService(PlayerList);
-            CreatePlayers();
-
-            //Act
-
-            CastVotes(votingService);
-            votingService.EliminatePlayer();
-
-            //Assert
-
+            Assert.AreEqual(PlayerList[1], eliminatedPlayer);
             Assert.IsFalse(PlayerList[1].IsAlive);
 
+
         }
+
+        
 
 
         [TestMethod] 
@@ -75,8 +63,7 @@ namespace Palermo.Tests
 
 
             votingService.CastVote(PlayerList[0], PlayerList[1]);
-            votingService.CastVote(PlayerList[1], PlayerList[2]);
-            votingService.CastVote(PlayerList[2], PlayerList[1]);
+      
 
 
             //Assert
@@ -122,14 +109,17 @@ namespace Palermo.Tests
 
             //Act
 
-            CastVotes(votingService);
+            votingService.CastVote(PlayerList[0], PlayerList[1]);
+            votingService.CastVote(PlayerList[1], PlayerList[2]);
+            votingService.CastVote(PlayerList[2], PlayerList[1]);
+
             votingService.ResetVotingProcess(PlayerList);
 
             //Assert
 
             foreach (var player in PlayerList) 
             {
-                Assert.Equals(player.Votes, 0);
+                Assert.AreEqual(player.Votes, 0);
             }
 
         }
@@ -153,11 +143,6 @@ namespace Palermo.Tests
         }
 
 
-        public void CastVotes(VotingService votingService) 
-        {
-            votingService.CastVote(PlayerList[0], PlayerList[1]);
-            votingService.CastVote(PlayerList[1], PlayerList[2]);
-            votingService.CastVote(PlayerList[2], PlayerList[1]);
-        }
+        
     }
 }

@@ -1,23 +1,16 @@
-﻿using Palermo.Domain.Core.Logic;
-using Palermo.Domain.Core.Logic.Players;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Palermo.Domain.Core.Logic.Players;
 
 namespace Palermo.Domain
 {
     public class VotingResults
     {
-        public Player EliminatedPlayer { get; set; } 
-        public Dictionary<Player,int> FinalVotes { get; set; }
+        public Player EliminatedPlayer { get; }
+        public IReadOnlyDictionary<Player, int> FinalVotes { get; }
 
-
-        public VotingResults()
+        public VotingResults(Player eliminatedPlayer, Dictionary<Player, int> finalVotes)
         {
-            FinalVotes = new Dictionary<Player,int>();
+            EliminatedPlayer = eliminatedPlayer;
+            FinalVotes = finalVotes;
         }
-
     }
 }
