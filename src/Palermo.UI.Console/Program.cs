@@ -12,7 +12,7 @@ public class Program
     static void Main()
     {
 
-        Game game = new Game();
+        Game game = new Game(6, new List<Player>());
 
         List<string> playerNames = new List<string>();
 

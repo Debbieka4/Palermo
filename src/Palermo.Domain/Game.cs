@@ -16,16 +16,18 @@ namespace Palermo.Domain.Core.Logic
     {
         public List<Player> Players { get; set; }
         public GamePhaze CurrentPhaze { get; set; }
-        public int RoundCount { get; private set; }
+        public int RoundCount { get; }
+        public int PlayersCount { get; }
 
         public Utils Utils = new Utils();
 
 
 
-        public Game()
+        public Game(int roundCount, int playersCount)
         {
-            this.Players = new List<Player>();
-            this.RoundCount = 1;
+            Players = new List<Player>();
+            RoundCount = roundCount;
+            PlayersCount = playersCount;
 
         }
 
@@ -34,31 +36,34 @@ namespace Palermo.Domain.Core.Logic
         /// </summary>
         /// <param name="numberOfPlayers"></param>
         /// <param name="playerNames"></param>
-        public void InitializeGame(int numberOfPlayers, List<string> playerNames)
+        public void InitializeGame(List<string> playerNames)
         {
 
-            if (numberOfPlayers > 3 && playerNames.Any() && playerNames.Count > 3)
+            if (PlayersCount > 3 && playerNames.Any() && playerNames.Count > 3)
             {
-                var playerIds = GeneratePlayerId(numberOfPlayers);
+                var playerIds = GeneratePlayerId(PlayersCount);
 
             Utils.ShuffleList(playerNames);
 
             
 
-                for (int i = 0; i == numberOfPlayers; i++)
+                for (int i = 0; i < PlayersCount + 1; i++)
                 {
                     for (int j = i; j < 2; j++)
                     {
                         Mafia mafia = new Mafia(playerNames[j], playerIds[j], RoleType.Mafia);
+                        Players.Add(mafia);
                         i++;
                     }
                     for (int v = i; v < i + 1; v++)
                     {
                         Detective detective = new Detective(playerNames[v], playerIds[v], RoleType.Detective);
+                        Players.Add(detective);
                         i++;
                     }
 
                     Citizen citizen = new Citizen(playerNames[i], playerIds[i], RoleType.Citizen);
+                    Players.Add(citizen);
                 }
             }
 
@@ -77,11 +82,12 @@ namespace Palermo.Domain.Core.Logic
         /// <summary>
         /// Generates a unique ID for each player.
         /// </summary>
-        /// <param name="players"></param>
+        /// <param name="numberOfPlayers"></param>
+        /// <returns></returns>
         public List<int> GeneratePlayerId(int numberOfPlayers) 
         {
 
-            var generateIds = Enumerable.Range(0, numberOfPlayers);
+            var generateIds = Enumerable.Range(0, PlayersCount);
             var finalIds = generateIds.Select(id => id).ToList();
             return finalIds;
 
@@ -93,28 +99,23 @@ namespace Palermo.Domain.Core.Logic
         /// </summary>
         public void Start() 
         {
-          
+            for (var i = 0; i < RoundCount + 1; i++) 
+            {
+                ExecuteDayPhase();
+                ExecuteNightPhase();
+            }
           
         }
 
 
         /// <summary>
-        /// Handles all actions for the Night phase.
-        /// Removes the target player - Mafia's selection - from the Players list.
+        /// 
         /// </summary>
-        /// <param name="targetPlayerId"></param>
-        public void ExecuteNightPhase(int targetPlayerId) 
+        public void ExecuteNightPhase() 
         {
             CurrentPhaze = GamePhaze.Night;
 
-         var eliminatedPlayer = string.Empty;
-         foreach (var player in Players) 
-            {
-                if (player.Id.Equals(targetPlayerId)) 
-                {
-                 Players.Remove(player);
-                }
-            }
+       
         }
 
 
@@ -124,17 +125,15 @@ namespace Palermo.Domain.Core.Logic
         public void ExecuteDayPhase() 
         {
             CurrentPhaze = GamePhaze.Day;
-            
+            VotingService votingService = new VotingService(Players);
+
+
+           
             
             
         }
 
-        public void CastPlayerVotes(Player voter, Player targetPlayer) 
-        {
-            VotingService newVote = new VotingService(Players);
-
-            newVote.CastVote(voter, targetPlayer);
-        }
+    
 
 
         /// <summary>
@@ -143,7 +142,7 @@ namespace Palermo.Domain.Core.Logic
         /// <returns></returns>
         public bool CheckVictoryConditions() 
         {
-
+            
             if (!Players.Select(p => p.Role).Equals(RoleType.Detective))
             {
                 /// the game has ended because the Detective has died. 
@@ -189,7 +188,7 @@ namespace Palermo.Domain.Core.Logic
         /// <summary>
         /// Shows the final roles and outcome of the game.
         /// </summary>
-        public Dictionary<string, string> DisplayResults() 
+        public Dictionary<string, string> RevealRoles() 
         {
             Dictionary<string, string> playerWithRoles = new Dictionary<string, string>();
 
