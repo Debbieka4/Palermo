@@ -12,7 +12,7 @@ public class Program
     static void Main()
     {
 
-        Game game = new Game(6, new List<Player>());
+        Game game = new Game(6, 4);
 
         List<string> playerNames = new List<string>();
 
@@ -20,7 +20,7 @@ public class Program
 
         GetPlayerNames();
 
-        game.InitializeGame(numberOfPlayers, playerNames);
+        game.InitializeGame(playerNames);
 
         foreach (Player player in game.Players)
         {
