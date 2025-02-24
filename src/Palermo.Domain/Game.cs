@@ -19,7 +19,7 @@ namespace Palermo.Domain.Core.Logic
         public int RoundCount { get; }
         public int PlayersCount { get; }
 
-        public Utils Utils = new Utils();
+        public Utils Utils { get; }
 
 
 
@@ -28,6 +28,7 @@ namespace Palermo.Domain.Core.Logic
             Players = new List<Player>();
             RoundCount = roundCount;
             PlayersCount = playersCount;
+            Utils = new Utils();
 
         }
 
@@ -43,26 +44,27 @@ namespace Palermo.Domain.Core.Logic
             {
                 var playerIds = GeneratePlayerId(PlayersCount);
 
-            Utils.ShuffleList(playerNames);
+            List<string> shuffledNames = Utils.ShuffleList(playerNames);
 
             
 
-                for (int i = 0; i < PlayersCount + 1; i++)
+                for (int i = 0; i < PlayersCount; i++)
                 {
                     for (int j = i; j < 2; j++)
                     {
-                        Mafia mafia = new Mafia(playerNames[j], playerIds[j], RoleType.Mafia);
+                        Mafia mafia = new Mafia(shuffledNames[i], playerIds[i], RoleType.Mafia);
                         Players.Add(mafia);
                         i++;
+                        
                     }
-                    for (int v = i; v < i + 1; v++)
+                    for (int v = 0; v < 1; v++)
                     {
-                        Detective detective = new Detective(playerNames[v], playerIds[v], RoleType.Detective);
+                        Detective detective = new Detective(shuffledNames[i], playerIds[i], RoleType.Detective);
                         Players.Add(detective);
-                        i++;
+                        i++; 
                     }
 
-                    Citizen citizen = new Citizen(playerNames[i], playerIds[i], RoleType.Citizen);
+                    Citizen citizen = new Citizen(shuffledNames[i], playerIds[i], RoleType.Citizen);
                     Players.Add(citizen);
                 }
             }

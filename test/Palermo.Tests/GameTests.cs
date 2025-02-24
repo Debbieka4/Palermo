@@ -1,10 +1,5 @@
 ﻿using Palermo.Domain.Core.Logic;
-using Palermo.Domain.Core.Logic.Players;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Palermo.Domain.Core.Logic.Enum;
 
 namespace Palermo.Tests
 {
@@ -35,11 +30,11 @@ namespace Palermo.Tests
 
             //Assert
 
-            var mafiaPlayers = game.Players.GroupBy(p => p.Role == Domain.Core.Logic.Enum.RoleType.Mafia).ToList();
+            var mafiaPlayers = game.Players.Where(p => p.Role == RoleType.Mafia).ToList();
 
-            var detective = game.Players.GroupBy(p => p.Role == Domain.Core.Logic.Enum.RoleType.Detective).ToList();
+            var detective = game.Players.Where(p => p.Role == RoleType.Detective).ToList();
 
-            var citizenPlayers = game.Players.GroupBy(p => p.Role == Domain.Core.Logic.Enum.RoleType.Citizen).ToList();
+            var citizenPlayers = game.Players.Where(p => p.Role == RoleType.Citizen).ToList();
 
             Assert.AreEqual(numberOfPlayers, game.Players.Count);
             Assert.AreEqual(mafiaPlayers.Count, 2);

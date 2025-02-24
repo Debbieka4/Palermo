@@ -38,9 +38,9 @@ namespace Palermo.Domain.Core.Logic
 
             List<T> copyList = new List<T>(list);
 
-            foreach (var item in list) 
+            for (int i = 0; i < list.Count; i++) 
             {
-                var randomItem = list[random.Next(copyList.Count)];
+                var randomItem = copyList[random.Next(copyList.Count)];
 
                 shuffledList.Add(randomItem);
 
