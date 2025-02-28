@@ -44,7 +44,8 @@ namespace Palermo.Domain.Core.Logic
             {
                 var playerIds = GeneratePlayerId(PlayersCount);
 
-            List<string> shuffledNames = Utils.ShuffleList(playerNames);
+            
+                List<string> shuffledNames = Utils.ShuffleList(playerNames);
 
             
 
@@ -84,12 +85,11 @@ namespace Palermo.Domain.Core.Logic
         /// <summary>
         /// Generates a unique ID for each player.
         /// </summary>
-        /// <param name="numberOfPlayers"></param>
         /// <returns></returns>
-        public List<int> GeneratePlayerId(int numberOfPlayers) 
+        public List<int> GeneratePlayerId(int playersCount) 
         {
 
-            var generateIds = Enumerable.Range(0, PlayersCount);
+            var generateIds = Enumerable.Range(0, playersCount);
             var finalIds = generateIds.Select(id => id).ToList();
             return finalIds;
 
@@ -104,7 +104,7 @@ namespace Palermo.Domain.Core.Logic
             for (var i = 0; i < RoundCount + 1; i++) 
             {
                 ExecuteDayPhase();
-                ExecuteNightPhase();
+                //ExecuteNightPhase();
             }
           
         }
@@ -113,10 +113,13 @@ namespace Palermo.Domain.Core.Logic
         /// <summary>
         /// 
         /// </summary>
-        public void ExecuteNightPhase() 
+        public void ExecuteNightPhase(Game game) 
         {
             CurrentPhaze = GamePhaze.Night;
-
+            foreach (var player in Players) 
+            {
+                player.PerformNightAction(game);
+            }
        
         }
 
